@@ -1,0 +1,25 @@
+import com.github.zafarkhaja.semver.ParseException
+import com.github.zafarkhaja.semver.Version
+import org.ajoberstar.gradle.git.release.opinion.Strategies
+import org.ajoberstar.grgit.Tag
+
+// if you want to use the pre-packaged config
+apply plugin: 'org.ajoberstar.release-opinion'
+
+release {
+    grgit = org.ajoberstar.grgit.Grgit.open()
+
+    defaultVersionStrategy = Strategies.SNAPSHOT
+
+    tagStrategy {
+        parseTag = { Tag tag ->
+            try {
+                println tag
+                Version.valueOf(tag.name[0] == 'server' ? tag.name[1..-1] : tag.name)
+            } catch (ParseException e) {
+                null
+            }
+        }
+    }
+
+}

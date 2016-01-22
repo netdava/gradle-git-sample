@@ -1,4 +1,5 @@
 rootProject.name = 'gradle-git-sample'
 
-include 'module-client'
 include 'docs'
+include 'client'
+include 'server'
